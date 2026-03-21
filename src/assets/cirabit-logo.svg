@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="160 80 640 200" role="img" aria-labelledby="title desc">
+  <title id="title">Cirabit Wordmark</title>
+  <desc id="desc">Vivid green C and white BIT wordmark on transparent background.</desc>
+
+  <path
+    d="M292 96H231Q186 96 186 141V219Q186 264 231 264H292"
+    fill="none"
+    stroke="#45e247"
+    stroke-width="17"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <g fill="none" stroke="#f4f4f4" stroke-width="15" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M320 96V264" />
+    <path d="M320 96H379Q420 96 420 133Q420 170 379 170H320" />
+    <path d="M320 170H387Q432 170 432 217Q432 264 387 264H320" />
+
+    <path d="M489 96H569" />
+    <path d="M529 96V264" />
+    <path d="M489 264H569" />
+
+    <path d="M622 96H769" />
+    <path d="M696 96V264" />
+  </g>
+</svg>
