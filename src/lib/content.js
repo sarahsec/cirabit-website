@@ -2,6 +2,7 @@ export const LANG_STORAGE_KEY = 'cirabit-language';
 export const THEME_STORAGE_KEY = 'cirabit-theme';
 export const HOME_ROUTE = '/';
 export const PRIVACY_ROUTE = '/privacy';
+export const DOWNLOAD_ROUTE = '/download';
 
 export const labels = {
   en: {
@@ -106,8 +107,48 @@ export const labels = {
     contributeSecondary: 'Open Pull Requests',
     website: 'Website',
     github: 'GitHub',
+    navigationAria: 'Site navigation',
     homeLink: 'Home',
+    downloadLink: 'Download',
     privacyPolicy: 'Privacy Policy',
+    downloadHeroButton: 'Download APK',
+    downloadPageTitle: 'Cirabit · Download',
+    downloadBadge: 'Downloads',
+    downloadTitle: 'Download Cirabit for Android',
+    downloadIntro:
+      'Pick the package that matches your device. If you are unsure, use the Universal APK.',
+    downloadPrimaryButton: 'Download Universal APK',
+    downloadPrimaryUrl: 'https://bucket.smaia.dev/cirabit/download/cirabit-android-universal.apk',
+    downloadFilesTitle: 'Available Files',
+    downloadFiles: [
+      {
+        title: 'Universal APK',
+        fileName: 'cirabit-android-universal.apk',
+        description: 'Recommended for most Android devices.',
+        url: 'https://bucket.smaia.dev/cirabit/download/cirabit-android-universal.apk'
+      },
+      {
+        title: 'ARM64 APK',
+        fileName: 'cirabit-android-arm64.apk',
+        description: 'Smaller package for modern ARM64 devices.',
+        url: 'https://bucket.smaia.dev/cirabit/download/cirabit-android-arm64.apk'
+      },
+      {
+        title: 'x86_64 APK',
+        fileName: 'cirabit-android-x86_64.apk',
+        description: 'Build for x86_64 devices and compatible emulators.',
+        url: 'https://bucket.smaia.dev/cirabit/download/cirabit-android-x86_64.apk'
+      },
+      {
+        title: 'Checksums',
+        fileName: 'SHA256SUMS.txt',
+        description: 'Use this to verify file integrity after download.',
+        url: 'https://bucket.smaia.dev/cirabit/download/SHA256SUMS.txt'
+      }
+    ],
+    downloadIntegrityTitle: 'Integrity Check',
+    downloadIntegrityDescription:
+      'After downloading, compare local hashes with SHA256SUMS.txt to confirm integrity.',
     privacyPageTitle: 'Cirabit · Privacy Policy',
     privacyBadge: 'Privacy Policy',
     privacyTitle: 'Cirabit Privacy Policy',
@@ -217,8 +258,48 @@ export const labels = {
     contributeSecondary: 'Abrir Pull Requests',
     website: 'Site',
     github: 'GitHub',
+    navigationAria: 'Navegação do site',
     homeLink: 'Início',
+    downloadLink: 'Download',
     privacyPolicy: 'Política de Privacidade',
+    downloadHeroButton: 'Baixar APK',
+    downloadPageTitle: 'Cirabit · Download',
+    downloadBadge: 'Downloads',
+    downloadTitle: 'Baixe o Cirabit para Android',
+    downloadIntro:
+      'Escolha o pacote ideal para seu dispositivo. Se tiver dúvida, use o APK Universal.',
+    downloadPrimaryButton: 'Baixar APK Universal',
+    downloadPrimaryUrl: 'https://bucket.smaia.dev/cirabit/download/cirabit-android-universal.apk',
+    downloadFilesTitle: 'Arquivos Disponíveis',
+    downloadFiles: [
+      {
+        title: 'APK Universal',
+        fileName: 'cirabit-android-universal.apk',
+        description: 'Recomendado para a maioria dos aparelhos Android.',
+        url: 'https://bucket.smaia.dev/cirabit/download/cirabit-android-universal.apk'
+      },
+      {
+        title: 'APK ARM64',
+        fileName: 'cirabit-android-arm64.apk',
+        description: 'Pacote menor para dispositivos ARM64 modernos.',
+        url: 'https://bucket.smaia.dev/cirabit/download/cirabit-android-arm64.apk'
+      },
+      {
+        title: 'APK x86_64',
+        fileName: 'cirabit-android-x86_64.apk',
+        description: 'Build para dispositivos x86_64 e emuladores compatíveis.',
+        url: 'https://bucket.smaia.dev/cirabit/download/cirabit-android-x86_64.apk'
+      },
+      {
+        title: 'Checksums',
+        fileName: 'SHA256SUMS.txt',
+        description: 'Use este arquivo para verificar a integridade do download.',
+        url: 'https://bucket.smaia.dev/cirabit/download/SHA256SUMS.txt'
+      }
+    ],
+    downloadIntegrityTitle: 'Verificação de Integridade',
+    downloadIntegrityDescription:
+      'Depois de baixar, compare os hashes locais com o SHA256SUMS.txt para confirmar integridade.',
     privacyPageTitle: 'Cirabit · Política de Privacidade',
     privacyBadge: 'Política de Privacidade',
     privacyTitle: 'Política de Privacidade do Cirabit',

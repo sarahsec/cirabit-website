@@ -1,10 +1,12 @@
 <script>
   import { onMount } from 'svelte';
+  import DownloadPage from './components/DownloadPage.svelte';
   import HomePage from './components/HomePage.svelte';
   import PrivacyPage from './components/PrivacyPage.svelte';
   import SiteFooter from './components/SiteFooter.svelte';
   import Topbar from './components/Topbar.svelte';
   import {
+    DOWNLOAD_ROUTE,
     HOME_ROUTE,
     LANG_STORAGE_KEY,
     PRIVACY_ROUTE,
@@ -48,7 +50,13 @@
     }
 
     const trimmed = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
-    return trimmed === PRIVACY_ROUTE ? PRIVACY_ROUTE : HOME_ROUTE;
+    if (trimmed === PRIVACY_ROUTE) {
+      return PRIVACY_ROUTE;
+    }
+    if (trimmed === DOWNLOAD_ROUTE) {
+      return DOWNLOAD_ROUTE;
+    }
+    return HOME_ROUTE;
   };
 
   function applyTheme(nextPreference, persist = true) {
@@ -83,8 +91,15 @@
 
   $: content = labels[language];
   $: isPrivacyRoute = currentPath === PRIVACY_ROUTE;
+  $: isDownloadRoute = currentPath === DOWNLOAD_ROUTE;
   $: if (typeof document !== 'undefined') {
-    document.title = isPrivacyRoute ? content.privacyPageTitle : content.siteTitle;
+    if (isPrivacyRoute) {
+      document.title = content.privacyPageTitle;
+    } else if (isDownloadRoute) {
+      document.title = content.downloadPageTitle;
+    } else {
+      document.title = content.siteTitle;
+    }
   }
 
   function setLanguage(nextLanguage) {
@@ -116,7 +131,10 @@
     {content}
     {language}
     {themePreference}
+    {currentPath}
     homeRoute={HOME_ROUTE}
+    privacyRoute={PRIVACY_ROUTE}
+    downloadRoute={DOWNLOAD_ROUTE}
     {navigate}
     {setLanguage}
     {setThemePreference}
@@ -125,6 +143,8 @@
   <main>
     {#if isPrivacyRoute}
       <PrivacyPage {content} {language} {navigate} homeRoute={HOME_ROUTE} />
+    {:else if isDownloadRoute}
+      <DownloadPage {content} />
     {:else}
       <HomePage {content} {maintainers} {resolvedTheme} />
     {/if}
@@ -133,9 +153,10 @@
   <SiteFooter
     {content}
     {currentYear}
-    {isPrivacyRoute}
+    {currentPath}
     {navigate}
     homeRoute={HOME_ROUTE}
     privacyRoute={PRIVACY_ROUTE}
+    downloadRoute={DOWNLOAD_ROUTE}
   />
 </div>

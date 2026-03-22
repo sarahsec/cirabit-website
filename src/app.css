@@ -144,6 +144,10 @@ body::after {
   color: var(--on-accent);
 }
 
+.nav-switcher button {
+  padding-inline: 0.72rem;
+}
+
 .control-icon {
   display: none;
   width: 1rem;
@@ -425,6 +429,45 @@ footer p {
   font-style: italic;
 }
 
+.download-panel {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.download-panel h1 {
+  max-width: none;
+  font-size: clamp(1.7rem, 4.2vw, 2.8rem);
+}
+
+.download-intro,
+.download-check,
+.download-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.62;
+}
+
+.download-grid {
+  margin-top: 0.9rem;
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.download-card {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: 0.95rem;
+  background: var(--surface-strong);
+  display: grid;
+  gap: 0.42rem;
+}
+
+.download-link {
+  width: fit-content;
+  overflow-wrap: anywhere;
+}
+
 .roadmap-tag {
   margin: 0 0 0.42rem;
   width: fit-content;
@@ -530,6 +573,20 @@ footer p {
   font-size: 0.88rem;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.footer-link {
+  color: var(--accent-strong);
+  text-decoration: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+}
+
 .footer-meta {
   margin-top: 0.35rem;
   color: var(--muted);
@@ -562,7 +619,8 @@ footer p {
   .fact-grid,
   .highlights,
   .maintainers,
-  .roadmap {
+  .roadmap,
+  .download-grid {
     grid-template-columns: 1fr;
   }
 
