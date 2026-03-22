@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import DownloadPage from './components/DownloadPage.svelte';
   import HomePage from './components/HomePage.svelte';
+  import NotFoundPage from './components/NotFoundPage.svelte';
   import PrivacyPage from './components/PrivacyPage.svelte';
   import SiteFooter from './components/SiteFooter.svelte';
   import Topbar from './components/Topbar.svelte';
@@ -15,6 +16,7 @@
     maintainers
   } from './lib/content';
 
+  const NOT_FOUND_ROUTE = '/404';
   const currentYear = new Date().getFullYear();
 
   let language = 'en';
@@ -56,7 +58,10 @@
     if (trimmed === DOWNLOAD_ROUTE) {
       return DOWNLOAD_ROUTE;
     }
-    return HOME_ROUTE;
+    if (trimmed === NOT_FOUND_ROUTE) {
+      return NOT_FOUND_ROUTE;
+    }
+    return NOT_FOUND_ROUTE;
   };
 
   function applyTheme(nextPreference, persist = true) {
@@ -92,11 +97,14 @@
   $: content = labels[language];
   $: isPrivacyRoute = currentPath === PRIVACY_ROUTE;
   $: isDownloadRoute = currentPath === DOWNLOAD_ROUTE;
+  $: isNotFoundRoute = currentPath === NOT_FOUND_ROUTE;
   $: if (typeof document !== 'undefined') {
     if (isPrivacyRoute) {
       document.title = content.privacyPageTitle;
     } else if (isDownloadRoute) {
       document.title = content.downloadPageTitle;
+    } else if (isNotFoundRoute) {
+      document.title = content.notFoundPageTitle;
     } else {
       document.title = content.siteTitle;
     }
@@ -145,6 +153,8 @@
       <PrivacyPage {content} {language} {navigate} homeRoute={HOME_ROUTE} />
     {:else if isDownloadRoute}
       <DownloadPage {content} />
+    {:else if isNotFoundRoute}
+      <NotFoundPage {content} {navigate} homeRoute={HOME_ROUTE} downloadRoute={DOWNLOAD_ROUTE} />
     {:else}
       <HomePage {content} {maintainers} {resolvedTheme} />
     {/if}
