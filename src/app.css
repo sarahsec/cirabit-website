@@ -102,6 +102,11 @@ body::after {
   letter-spacing: 0.04em;
 }
 
+.brand-link {
+  color: var(--text);
+  text-decoration: none;
+}
+
 .controls {
   display: flex;
   flex-wrap: wrap;
@@ -347,6 +352,77 @@ footer p {
 
 .section-description {
   margin-top: 0.55rem;
+}
+
+.privacy-panel {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.privacy-panel h1 {
+  max-width: none;
+  font-size: clamp(1.7rem, 4.2vw, 2.8rem);
+}
+
+.privacy-panel h2 {
+  margin-top: 0.4rem;
+  font-size: clamp(1.12rem, 2.3vw, 1.45rem);
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.privacy-panel h2::before {
+  content: '';
+}
+
+.privacy-panel h3 {
+  margin: 0.3rem 0 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.83rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+}
+
+.policy-updated,
+.policy-intro,
+.policy-block p,
+.policy-block li {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.62;
+}
+
+.policy-updated {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--accent-strong);
+}
+
+.policy-intro {
+  color: var(--text);
+}
+
+.policy-block {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.policy-block ul {
+  margin: 0.15rem 0 0.1rem 1.1rem;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.policy-link {
+  color: var(--accent-strong);
+  text-decoration: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.9em;
+}
+
+.policy-license {
+  font-style: italic;
 }
 
 .roadmap-tag {

@@ -1,257 +1,24 @@
 <script>
   import { onMount } from 'svelte';
-  import cirabitLogo from './assets/cirabit-logo.svg';
-  import cirabitLogoLight from './assets/cirabit-logo-light.svg';
+  import HomePage from './components/HomePage.svelte';
+  import PrivacyPage from './components/PrivacyPage.svelte';
+  import SiteFooter from './components/SiteFooter.svelte';
+  import Topbar from './components/Topbar.svelte';
+  import {
+    HOME_ROUTE,
+    LANG_STORAGE_KEY,
+    PRIVACY_ROUTE,
+    THEME_STORAGE_KEY,
+    labels,
+    maintainers
+  } from './lib/content';
 
-  const LANG_STORAGE_KEY = 'cirabit-language';
-  const THEME_STORAGE_KEY = 'cirabit-theme';
   const currentYear = new Date().getFullYear();
-
-  const labels = {
-    en: {
-      pageLanguage: 'en-US',
-      siteTitle: 'Cirabit',
-      projectBadge: 'Android Project',
-      heroMeta: '// decentralized android messaging',
-      heroTitle: 'Mesh-native Android messaging, with no central servers.',
-      heroDescription:
-        'Cirabit brings a decentralized, peer-to-peer messaging model to Android, built to stay useful in local range even when internet is unstable or unavailable.',
-      primaryButton: 'Open Cirabit on GitHub',
-      secondaryButton: 'View roadmap',
-      logoAlt: 'Cirabit app logo',
-      languageSwitcherAria: 'Language switcher',
-      themeSwitcherAria: 'Theme switcher',
-      languageEnglishAria: 'English (US)',
-      languagePortugueseAria: 'Portuguese (Brazil)',
-      themeLightAria: 'Light theme',
-      themeDarkAria: 'Dark theme',
-      themeLight: 'LIGHT',
-      themeDark: 'DARK',
-      facts: [
-        {
-          value: 'No central servers',
-          label: 'Messages move device-to-device through local mesh paths'
-        },
-        {
-          value: 'Truly local-first',
-          label: 'Nearby communication does not depend on cloud accounts'
-        },
-        {
-          value: 'Real-world resilience',
-          label: 'Designed for unstable networks, crowded events, and offline moments'
-        }
-      ],
-      highlightsTitle: 'Why this messaging model matters',
-      highlightsDescription:
-        'Cirabit follows a privacy-conscious, mesh-first direction focused on autonomy, continuity, and practical reliability.',
-      highlights: [
-        {
-          title: 'Mesh-First Communication',
-          description:
-            'Peer-to-peer exchange is the baseline, reducing dependency on centralized infrastructure.'
-        },
-        {
-          title: 'Offline-Ready Experience',
-          description:
-            'Local conversations remain usable even when internet access is weak, unstable, or unavailable.'
-        },
-        {
-          title: 'Privacy by Default',
-          description:
-            'The architecture minimizes unnecessary exposure of metadata to central services.'
-        },
-        {
-          title: 'Practical Reliability',
-          description:
-            'The focus stays on a lightweight, predictable app that holds up in daily use.'
-        }
-      ],
-      roadmapTitle: 'Roadmap in motion',
-      roadmapDescription:
-        'The roadmap keeps strengthening the decentralized core while preserving simplicity and usability.',
-      roadmap: [
-        {
-          tag: 'NOW',
-          title: 'Mesh reliability tuning',
-          description:
-            'Improve peer discovery and message relay consistency in dense environments.'
-        },
-        {
-          tag: 'NEXT',
-          title: 'Better continuity between sessions',
-          description:
-            'Refine reconnection and state handling so conversations recover with less friction.'
-        },
-        {
-          tag: 'NEXT',
-          title: 'Bilingual polish',
-          description:
-            'Keep EN-US and PT-BR first-class while preparing the base for future community locales.'
-        },
-        {
-          tag: 'SOON',
-          title: 'Safer defaults and controls',
-          description:
-            'Add UX refinements that make private, local-first messaging easier for everyone.'
-        }
-      ],
-      maintainersTitle: 'Main maintainers',
-      maintainersDescription:
-        'Cirabit is actively maintained by people focused on decentralized communication, collaboration, and practical improvements.',
-      maintainerProfiles: {
-        sarah: {
-          role: 'Lead maintainer',
-          focus: 'Focuses on Android implementation details, tooling, and bug triage.'
-        },
-        andre: {
-          role: 'Core maintainer',
-          focus: 'Coordinates releases, language quality, and long-term direction.'
-        }
-      },
-      contributeTitle: 'Contribute to Cirabit',
-      contributeDescription:
-        'Ideas, bug reports, and pull requests are welcome. Community feedback helps harden the mesh experience and prioritize what comes next.',
-      contributePrimary: 'Open Issues',
-      contributeSecondary: 'Open Pull Requests',
-      website: 'Website',
-      github: 'GitHub',
-      footer:
-        'Cirabit is an independent fork of Bitchat Android. Credit to the original effort by Permissionless Tech.',
-      footerMeta: 'Built with 💚 · {year}'
-    },
-    pt: {
-      pageLanguage: 'pt-BR',
-      siteTitle: 'Cirabit',
-      projectBadge: 'Projeto Android',
-      heroMeta: '// chat android descentralizado',
-      heroTitle: 'Chat Android descentralizado, sem servidores centrais.',
-      heroDescription:
-        'O Cirabit usa uma rede em malha descentralizada: chat ponto a ponto que continua útil no alcance local, mesmo com internet instável ou indisponível.',
-      primaryButton: 'Abrir Cirabit no GitHub',
-      secondaryButton: 'Ver roadmap',
-      logoAlt: 'Logo do aplicativo Cirabit',
-      languageSwitcherAria: 'Seletor de idioma',
-      themeSwitcherAria: 'Seletor de tema',
-      languageEnglishAria: 'Inglês (EUA)',
-      languagePortugueseAria: 'Português (Brasil)',
-      themeLightAria: 'Tema claro',
-      themeDarkAria: 'Tema escuro',
-      themeLight: 'CLARO',
-      themeDark: 'ESCURO',
-      facts: [
-        {
-          value: 'Sem servidor central',
-          label: 'As mensagens circulam de aparelho para aparelho em rede local'
-        },
-        {
-          value: 'Local-first de verdade',
-          label: 'A comunicação por proximidade não depende de conta em nuvem'
-        },
-        {
-          value: 'Resiliência no mundo real',
-          label: 'Pensado para eventos lotados, sinal fraco e cenários offline'
-        }
-      ],
-      highlightsTitle: 'Por que esse modelo importa',
-      highlightsDescription:
-        'O Cirabit prioriza chat em malha com foco em autonomia, continuidade da conversa e privacidade por padrão.',
-      highlights: [
-        {
-          title: 'Comunicação Mesh-First',
-          description:
-            'A troca entre pares é prioridade, reduzindo a dependência de infraestrutura centralizada.'
-        },
-        {
-          title: 'Experiência pronta para offline',
-          description:
-            'Mesmo sem internet estável, a conversa local continua funcional entre dispositivos próximos.'
-        },
-        {
-          title: 'Privacidade por padrão',
-          description:
-            'A arquitetura reduz exposição desnecessária de metadados em serviços centrais.'
-        },
-        {
-          title: 'Confiabilidade prática',
-          description:
-            'O foco permanece em um app leve, previsível e robusto para o uso diário.'
-        }
-      ],
-      roadmapTitle: 'Roadmap em andamento',
-      roadmapDescription:
-        'A evolução segue fortalecendo o núcleo descentralizado sem perder simplicidade e usabilidade.',
-      roadmap: [
-        {
-          tag: 'AGORA',
-          title: 'Ajustes de confiabilidade da malha',
-          description:
-            'Melhorar descoberta de pares e consistência de retransmissão em ambientes densos.'
-        },
-        {
-          tag: 'PRÓXIMO',
-          title: 'Continuidade entre sessões',
-          description:
-            'Refinar reconexão e recuperação de estado para retomar conversas com menos fricção.'
-        },
-        {
-          tag: 'PRÓXIMO',
-          title: 'Polimento bilíngue',
-          description:
-            'Elevar a qualidade nativa de EN-US e PT-BR e preparar a base para novos idiomas da comunidade.'
-        },
-        {
-          tag: 'EM BREVE',
-          title: 'Padrões de segurança e controle',
-          description:
-            'Adicionar refinamentos de UX para deixar o chat local mais seguro e intuitivo.'
-        }
-      ],
-      maintainersTitle: 'Principais mantenedores',
-      maintainersDescription:
-        'O Cirabit é mantido ativamente por pessoas focadas em comunicação descentralizada, colaboração e melhorias práticas.',
-      maintainerProfiles: {
-        sarah: {
-          role: 'Mantenedora principal',
-          focus: 'Atua em implementação Android, tooling e triagem de bugs.'
-        },
-        andre: {
-          role: 'Mantenedor principal',
-          focus: 'Coordena releases, qualidade de idiomas e direção de longo prazo.'
-        }
-      },
-      contributeTitle: 'Contribua com o Cirabit',
-      contributeDescription:
-        'Ideias, relatos de bugs e pull requests são bem-vindos. O feedback da comunidade ajuda a fortalecer a experiência em malha e definir os próximos passos.',
-      contributePrimary: 'Abrir Issues',
-      contributeSecondary: 'Abrir Pull Requests',
-      website: 'Site',
-      github: 'GitHub',
-      footer:
-        'Cirabit é um fork independente do Bitchat Android. Créditos ao esforço original da Permissionless Tech.',
-      footerMeta: 'Feito com 💚 · {year}'
-    }
-  };
-
-  const maintainers = [
-    {
-      id: 'sarah',
-      name: 'Sarah Maia',
-      website: 'https://www.smaia.dev',
-      github: 'https://github.com/sarahsec',
-      photo: 'https://bucket.smaia.dev/assets/smaia.jpg'
-    },
-    {
-      id: 'andre',
-      name: 'André Ribas',
-      website: 'https://ribassu.com',
-      github: 'https://github.com/RibasSu',
-      photo: 'https://ribassu.com/assets/profiles/profile_84fcfa8e-cb5b-4d10-a4b9-dcf2668911b9_1769358881244.jpg'
-    }
-  ];
 
   let language = 'en';
   let themePreference = 'dark';
   let resolvedTheme = 'dark';
+  let currentPath = HOME_ROUTE;
 
   const resolveInitialLanguage = () => {
     const savedLanguage = localStorage.getItem(LANG_STORAGE_KEY);
@@ -260,6 +27,10 @@
     }
 
     return navigator.language.toLowerCase().startsWith('pt') ? 'pt' : 'en';
+  };
+
+  const getSystemTheme = () => {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   };
 
   const resolveInitialThemePreference = () => {
@@ -271,8 +42,13 @@
     return getSystemTheme();
   };
 
-  const getSystemTheme = () => {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const normalizeRoute = (pathname) => {
+    if (!pathname || pathname === '/') {
+      return HOME_ROUTE;
+    }
+
+    const trimmed = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+    return trimmed === PRIVACY_ROUTE ? PRIVACY_ROUTE : HOME_ROUTE;
   };
 
   function applyTheme(nextPreference, persist = true) {
@@ -292,9 +68,24 @@
     document.documentElement.lang = labels[language].pageLanguage;
 
     applyTheme(resolveInitialThemePreference(), false);
+
+    const syncRoute = () => {
+      currentPath = normalizeRoute(window.location.pathname);
+    };
+
+    syncRoute();
+    window.addEventListener('popstate', syncRoute);
+
+    return () => {
+      window.removeEventListener('popstate', syncRoute);
+    };
   });
 
   $: content = labels[language];
+  $: isPrivacyRoute = currentPath === PRIVACY_ROUTE;
+  $: if (typeof document !== 'undefined') {
+    document.title = isPrivacyRoute ? content.privacyPageTitle : content.siteTitle;
+  }
 
   function setLanguage(nextLanguage) {
     language = nextLanguage;
@@ -305,214 +96,46 @@
   function setThemePreference(nextThemePreference) {
     applyTheme(nextThemePreference);
   }
+
+  function navigate(event, nextPath) {
+    event.preventDefault();
+    const normalizedPath = normalizeRoute(nextPath);
+
+    if (normalizedPath === currentPath) {
+      return;
+    }
+
+    window.history.pushState({}, '', normalizedPath);
+    currentPath = normalizedPath;
+    window.scrollTo(0, 0);
+  }
 </script>
 
 <div class="page">
-  <header class="topbar reveal" style="--delay: 80ms;">
-    <p class="brand">{content.siteTitle}</p>
-    <div class="controls">
-      <div class="switcher" aria-label={content.languageSwitcherAria}>
-        <button
-          class:active={language === 'en'}
-          on:click={() => setLanguage('en')}
-          aria-pressed={language === 'en'}
-          aria-label={content.languageEnglishAria}
-        >
-          <span class="control-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <rect x="2" y="4" width="20" height="16" rx="2" fill="currentColor" opacity="0.2" />
-              <path d="M2 7h20M2 11h20M2 15h20" stroke="currentColor" stroke-width="1.4" />
-              <rect x="2" y="4" width="9" height="7" rx="1.4" fill="currentColor" />
-            </svg>
-          </span>
-          <span class="control-label">EN-US</span>
-        </button>
-        <button
-          class:active={language === 'pt'}
-          on:click={() => setLanguage('pt')}
-          aria-pressed={language === 'pt'}
-          aria-label={content.languagePortugueseAria}
-        >
-          <span class="control-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <rect x="2" y="4" width="20" height="16" rx="2" fill="currentColor" />
-              <path d="M12 7 18 12 12 17 6 12Z" fill="#f4d35e" />
-              <circle cx="12" cy="12" r="2.1" fill="#1e3a8a" />
-            </svg>
-          </span>
-          <span class="control-label">PT-BR</span>
-        </button>
-      </div>
-      <div class="switcher" aria-label={content.themeSwitcherAria}>
-        <button
-          class:active={themePreference === 'light'}
-          on:click={() => setThemePreference('light')}
-          aria-pressed={themePreference === 'light'}
-          aria-label={content.themeLightAria}
-        >
-          <span class="control-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="4.2" fill="currentColor" />
-              <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.7 5.7l2.2 2.2M16.1 16.1l2.2 2.2M18.3 5.7l-2.2 2.2M7.9 16.1l-2.2 2.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-            </svg>
-          </span>
-          <span class="control-label">{content.themeLight}</span>
-        </button>
-        <button
-          class:active={themePreference === 'dark'}
-          on:click={() => setThemePreference('dark')}
-          aria-pressed={themePreference === 'dark'}
-          aria-label={content.themeDarkAria}
-        >
-          <span class="control-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M14.5 3.3a8.3 8.3 0 1 0 6.2 13.1A9.1 9.1 0 0 1 14.5 3.3Z" fill="currentColor" />
-            </svg>
-          </span>
-          <span class="control-label">{content.themeDark}</span>
-        </button>
-      </div>
-    </div>
-  </header>
+  <Topbar
+    {content}
+    {language}
+    {themePreference}
+    homeRoute={HOME_ROUTE}
+    {navigate}
+    {setLanguage}
+    {setThemePreference}
+  />
 
   <main>
-    <section class="hero panel reveal" style="--delay: 140ms;">
-      <div class="hero-main">
-        <div class="hero-copy">
-          <p class="badge">{content.projectBadge}</p>
-          <p class="hero-meta">{content.heroMeta}</p>
-          <h1>{content.heroTitle}</h1>
-          <p class="hero-description">{content.heroDescription}</p>
-          <div class="actions">
-            <a class="button primary" href="https://github.com/sarahsec/cirabit-android" target="_blank" rel="noreferrer">
-              {content.primaryButton}
-            </a>
-            <a class="button secondary" href="#roadmap">
-              {content.secondaryButton}
-            </a>
-          </div>
-        </div>
-        <div class="hero-brand">
-          <img
-            class="hero-logo"
-            src={resolvedTheme === 'light' ? cirabitLogoLight : cirabitLogo}
-            alt={content.logoAlt}
-            loading="lazy"
-            decoding="async"
-            draggable="false"
-          />
-        </div>
-      </div>
-      <div class="fact-grid">
-        {#each content.facts as fact, index}
-          <article class="fact-card reveal" style={`--delay: ${220 + index * 70}ms;`}>
-            <p class="fact-value">{fact.value}</p>
-            <p class="fact-label">{fact.label}</p>
-          </article>
-        {/each}
-      </div>
-    </section>
-
-    <section class="panel reveal" style="--delay: 220ms;">
-      <h2>{content.highlightsTitle}</h2>
-      <p class="section-description">{content.highlightsDescription}</p>
-      <div class="highlights">
-        {#each content.highlights as highlight, index}
-          <article class="highlight-card reveal" style={`--delay: ${300 + index * 80}ms;`}>
-            <h3>{highlight.title}</h3>
-            <p>{highlight.description}</p>
-          </article>
-        {/each}
-      </div>
-    </section>
-
-    <section id="roadmap" class="panel reveal" style="--delay: 320ms;">
-      <h2>{content.roadmapTitle}</h2>
-      <p class="section-description">{content.roadmapDescription}</p>
-      <div class="roadmap">
-        {#each content.roadmap as item, index}
-          <article class="roadmap-item reveal" style={`--delay: ${360 + index * 80}ms;`}>
-            <p class="roadmap-tag">{item.tag}</p>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-          </article>
-        {/each}
-      </div>
-    </section>
-
-    <section class="panel reveal" style="--delay: 380ms;">
-      <h2>{content.maintainersTitle}</h2>
-      <p class="section-description">{content.maintainersDescription}</p>
-      <div class="maintainers">
-        {#each maintainers as maintainer, index}
-          {@const profile = content.maintainerProfiles[maintainer.id]}
-          <article class="maintainer-card reveal" style={`--delay: ${440 + index * 100}ms;`}>
-            <div class="maintainer-top">
-              <img
-                class="maintainer-photo"
-                src={maintainer.photo}
-                alt={`${maintainer.name} profile photo`}
-                loading="lazy"
-                decoding="async"
-                draggable="false"
-              />
-              <div class="maintainer-meta">
-                <p class="maintainer-name">{maintainer.name}</p>
-                <p class="maintainer-role">{profile.role}</p>
-              </div>
-            </div>
-            <p class="maintainer-focus">{profile.focus}</p>
-            <div class="maintainer-links">
-              <a
-                href={maintainer.website}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`${content.website}: ${maintainer.name}`}
-                title={content.website}
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path
-                    d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm6.94 8h-3.13a14.7 14.7 0 0 0-1.02-4 7.02 7.02 0 0 1 4.15 4ZM12 5c.9 1.08 1.55 2.55 1.85 4H10.15c.3-1.45.95-2.92 1.85-4Zm-2.79 2a14.7 14.7 0 0 0-1.02 4H5.06a7.02 7.02 0 0 1 4.15-4ZM5.06 13h3.13c.1 1.43.45 2.8 1.02 4a7.02 7.02 0 0 1-4.15-4ZM12 19c-.9-1.08-1.55-2.55-1.85-4h3.7c-.3 1.45-.95 2.92-1.85 4Zm2.79-2c.57-1.2.92-2.57 1.02-4h3.13a7.02 7.02 0 0 1-4.15 4Z"
-                  />
-                </svg>
-                <span class="sr-only">{content.website}</span>
-              </a>
-              <a
-                href={maintainer.github}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`${content.github}: ${maintainer.name}`}
-                title={content.github}
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path
-                    d="M12 2C6.48 2 2 6.58 2 12.22c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.5v-1.74c-2.78.62-3.37-1.2-3.37-1.2-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .08 1.53 1.05 1.53 1.05.89 1.57 2.34 1.12 2.91.86.09-.67.35-1.12.64-1.37-2.22-.26-4.56-1.15-4.56-5.11 0-1.13.39-2.06 1.03-2.79-.1-.27-.44-1.36.1-2.84 0 0 .84-.28 2.75 1.07A9.35 9.35 0 0 1 12 6.84c.85 0 1.7.12 2.5.35 1.9-1.35 2.74-1.07 2.74-1.07.54 1.48.2 2.57.1 2.84.64.73 1.03 1.66 1.03 2.79 0 3.97-2.34 4.85-4.58 5.11.36.32.68.95.68 1.91v2.83c0 .28.18.61.68.5A10.26 10.26 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z"
-                  />
-                </svg>
-                <span class="sr-only">{content.github}</span>
-              </a>
-            </div>
-          </article>
-        {/each}
-      </div>
-    </section>
-
-    <section class="panel reveal" style="--delay: 460ms;">
-      <h2>{content.contributeTitle}</h2>
-      <p class="section-description">{content.contributeDescription}</p>
-      <div class="actions">
-        <a class="button primary" href="https://github.com/sarahsec/cirabit-android/issues" target="_blank" rel="noreferrer">
-          {content.contributePrimary}
-        </a>
-        <a class="button secondary" href="https://github.com/sarahsec/cirabit-android/pulls" target="_blank" rel="noreferrer">
-          {content.contributeSecondary}
-        </a>
-      </div>
-    </section>
+    {#if isPrivacyRoute}
+      <PrivacyPage {content} {language} {navigate} homeRoute={HOME_ROUTE} />
+    {:else}
+      <HomePage {content} {maintainers} {resolvedTheme} />
+    {/if}
   </main>
 
-  <footer class="reveal" style="--delay: 580ms;">
-    <p>{content.footer}</p>
-    <p class="footer-meta">{content.footerMeta.replace('{year}', String(currentYear))}</p>
-  </footer>
+  <SiteFooter
+    {content}
+    {currentYear}
+    {isPrivacyRoute}
+    {navigate}
+    homeRoute={HOME_ROUTE}
+    privacyRoute={PRIVACY_ROUTE}
+  />
 </div>
