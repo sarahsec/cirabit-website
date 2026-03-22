@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/latest-release",
+      "destination": "https://api.github.com/repos/sarahsec/cirabit-android/releases/latest"
+    }
+  ]
+}
