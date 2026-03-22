@@ -15,10 +15,10 @@
       <h1>{content.heroTitle}</h1>
       <p class="hero-description">{content.heroDescription}</p>
       <div class="actions">
-        <a class="button primary" href="https://github.com/sarahsec/cirabit-android" target="_blank" rel="noreferrer">
+        <a class="button primary" href={content.downloadPrimaryUrl} target="_blank" rel="noreferrer">
           {content.primaryButton}
         </a>
-        <a class="button secondary" href={content.downloadPrimaryUrl} target="_blank" rel="noreferrer">
+        <a class="button secondary" href="https://github.com/sarahsec/cirabit-android" target="_blank" rel="noreferrer">
           {content.downloadHeroButton}
         </a>
         <a class="button secondary" href="#roadmap">
